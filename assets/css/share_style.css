@@ -66,7 +66,7 @@ button{
   border-bottom: 1px solid #ebedf9;
 }
 header span{
-  font-size: 21px;
+  font-size: 25px;
   font-weight: 600;
 }
 header .close, .icons a{
@@ -87,14 +87,16 @@ header .close{
 header .close:hover{
   background: #ebedf9;
 }
-.popup .content{
+.popup .content_share{
   margin: 20px 0;
 }
 .popup .icons{
   margin: 15px 0 20px 0;
 }
-.content p{
-  font-size: 16px;
+.content_share p{
+  font-size: 23px;
+  color: #000;
+  font-weight: 500;
 }
 div .icons {
   overflow: auto;
@@ -171,7 +173,7 @@ div .icons a {
 .icons a:hover i{
   transform: scale(1.2);
 }
-.content .field{
+.content_share .field{
   margin: 12px 0 -5px 0;
   height: 45px;
   border-radius: 4px;
