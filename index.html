@@ -23,7 +23,7 @@
 				<!-- Header -->
 					<header id="header">
 						<h1>najib</h1>
-						<p>mobile &nbsp;&bull;&nbsp; frontend &nbsp;&bull;&nbsp; backend</p>
+						<p>{ &nbsp;<span id="typed-text"></span>&nbsp; }</p>
 						<nav>
 							<ul>
 								<li><a href="https://www.linkedin.com/in/najib-budin-abdullah-15192b13a/" target="_blank" class="icon brands fa-linkedin-in"><span class="label">Linkedin</span></a></li>
@@ -89,10 +89,20 @@
 
 		<script src="assets/js/share.js"></script>
 		<script src="assets/js/qrcode.js"></script>
+		<script src="assets/js/typed.js"></script>
 		<script>
 			window.onload = function() { document.body.classList.remove('is-preload'); }
 			window.ontouchmove = function() { return false; }
 			window.onorientationchange = function() { document.body.scrollTop = 0; }
+		</script>
+
+		<script>
+			var typed = new Typed("#typed-text", {
+				strings: ["mobile", "frontend", "backend"],
+				typeSpeed: 80,
+				backSpeed: 50,
+				loop: true
+			});
 		</script>
 	</body>
 </html>
