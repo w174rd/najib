@@ -43,7 +43,10 @@
 			</div>
 		</div>
 
-		<button class="view-modal"><i class="uil uil-share-alt"></i></button>
+		<div class="share-button-container">
+			<button class="view-modal-qrcode text-right"><i class="uil uil-qrcode-scan"></i></button>
+			<button class="view-modal text-right"><i class="uil uil-share-alt"></i></button>
+		</div>
 
 		<div class="popup">
 			<header>
@@ -70,7 +73,22 @@
 			</div>
 		</div>
 
+		<div class="popup-qrcode">
+			<header>
+			  <span>Scan this QR Code</span>
+			  <div class="close"><i class="uil uil-times"></i></div>
+			</header>
+			<div class="content-qrcode">
+			  <img
+				class="mb-8 mx-auto"
+				src="assets/images/qr_najib_info.png"
+				alt="najib.info QR Code"
+			  />
+			</div>
+		</div>
+
 		<script src="assets/js/share.js"></script>
+		<script src="assets/js/qrcode.js"></script>
 		<script>
 			window.onload = function() { document.body.classList.remove('is-preload'); }
 			window.ontouchmove = function() { return false; }
