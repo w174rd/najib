@@ -220,11 +220,12 @@ div .icons a {
   outline: none;
   font-size: 20px;
   color: #131313;
+  background-color: transparent;
 }
 .field button{
   color: #fff;
   padding: 5px 18px;
-  background: #131313;
+  background: #333333;
 }
 .field button:hover{
   background: #333333;
