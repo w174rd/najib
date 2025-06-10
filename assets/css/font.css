@@ -1,0 +1,24 @@
+@font-face {
+	font-family: 'UnifrakturMaguntia';
+	src: local('UnifrakturMaguntia'), url('../webfonts/UnifrakturMaguntia.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Lombardina Initial Two';
+	src: local('Lombardina Initial Two'),
+	     url('../webfonts/lombardina_initial_two.woff') format('woff'),
+	     url('../webfonts/lombardina_initial_two.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Lombardina Initial One';
+	src: local('Lombardina Initial One'),
+	     url('../webfonts/lombardina_initial_one.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
