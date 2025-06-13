@@ -1089,7 +1089,7 @@ input, select, textarea {
 	display: inline-flex; align-items: center;
 }
 .title_content h1{
-	font-family:'Lombardina Initial Two'; color: rgb(105, 13, 13); font-size: 120px !important; vertical-align: middle;
+	font-family:'Lombardina Initial Two'; color: rgb(143, 22, 22); font-size: 120px !important; vertical-align: middle;
 }
 .title_content span{
 	font-family: 'UnifrakturMaguntia'; font-size: 30px; margin-left: 5px; line-height: 0.9; text-align: left;
