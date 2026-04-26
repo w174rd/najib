@@ -128,6 +128,8 @@ input, select, textarea {
 	.icon {
 		text-decoration: none;
 		position: relative;
+		border: 1px solid #fff;
+    	border-radius: 50%;
 	}
 	
 
@@ -156,10 +158,12 @@ input, select, textarea {
 			font-family: 'Font Awesome 5 Brands';
 		}
 	
-	.icon.title {
-		margin: 0px !important;
+	.title {
+		font-size: small !important;
+		margin-top: .5em !important;
 		padding: 0px !important;
-		display: inline !important;
+		white-space: nowrap;
+		line-height: 1.5em;
 	}
 
 /* Wrapper */
@@ -598,10 +602,10 @@ input, select, textarea {
 				height: 5.35em;
 				line-height: 2.5em;
 				opacity: 0;
-				position: relative;
 				top: 0;
-				margin-left: 30px;
-				margin-bottom: 30px;
+				margin-left: 15px;
+				margin-right:15px;
+				margin-top: 5px;
 			}
 
 				#header nav li:nth-child(1) {
@@ -678,10 +682,9 @@ input, select, textarea {
 				-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 				-webkit-touch-callout: none;
 				border: 0;
-				display: inline-block;
+				
 			}
-
-				#header nav a:before {
+				#header nav a {
 					-moz-transition: all 0.2s ease-in-out;
 					-webkit-transition: all 0.2s ease-in-out;
 					-ms-transition: all 0.2s ease-in-out;
@@ -702,24 +705,22 @@ input, select, textarea {
 					font-size: 1.1em;
 				} */
 
-					#header nav a:hover:before {
+					#header nav a:hover {
 						background-color: rgba(255, 255, 255, 0.175);
-						color: #fff;
-					}
-
-				#header nav a:active {
-					font-size: 0.95em;
-					background: none;
-				}
-
-					#header nav a:active:before {
-						background-color: rgba(255, 255, 255, 0.35);
 						color: #fff;
 					}
 
 				#header nav a span {
 					display: none;
 				}
+
+			.fa-wattpad {
+				width: 1em;
+				height: 1em;
+				display: inline-block;
+				vertical-align: -0.125em;
+				fill: currentColor;
+			}
 
 /* Footer */
 
@@ -1001,14 +1002,7 @@ input, select, textarea {
 		#header nav {
 			font-size: 1em;
 		}
-
-			#header nav a:hover {
-				font-size: 1em;
-			}
-
-			#header nav a:active {
-				font-size: 1em;
-			} }
+	}
 
 /* Mobile (Portrait) */
 
