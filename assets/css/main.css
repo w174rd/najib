@@ -1097,6 +1097,10 @@ input, select, textarea {
 	font-family: 'UnifrakturMaguntia'; font-size: 30px; margin-left: 5px; line-height: 0.9; text-align: left;
 }
 
-.copyright .icon{
+.icon-footer {
+	text-decoration: none;
+	position: relative;
+}
+.copyright .icon-footer{
 	font-family: UnifrakturMaguntia;
 }
