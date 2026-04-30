@@ -1,0 +1,43 @@
+body {
+	background-color: #131313;
+	color: #fff;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-family: sans-serif;
+}
+
+h1 {
+	font-family: 'UnifrakturMaguntia', serif;
+	font-size: 12rem;
+	font-weight: 100;
+	color: #fff;
+	margin: 0;
+	letter-spacing: 0.5rem;
+}
+
+p {
+	font-family: 'UnifrakturMaguntia', serif;
+	font-size: 3rem;
+	color: #fff;
+	margin: 0 0 40px 0;
+	opacity: 1;
+}
+
+a {
+	color: #fff;
+	text-decoration: none;
+	border: 1px solid #fff;
+	padding: 10px 20px;
+	font-size: 0.8rem;
+	transition: background 0.3s, color 0.3s;
+}
+
+a:hover {
+	background-color: #fff;
+	color: #000;
+}
