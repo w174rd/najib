@@ -714,7 +714,8 @@ input, select, textarea {
 					display: none;
 				}
 
-			.fa-wattpad {
+			.fa-wattpad,
+			.fa-w174rd {
 				width: 1em;
 				height: 1em;
 				display: inline-block;
