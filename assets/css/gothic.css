@@ -894,24 +894,58 @@
 
 		#header nav li {
 			flex: 0 0 33.333%;
-			height: 5.4em;
+			height: 6.8em;
 		}
 
+		/* 50px circles sat in 93-117px cells — the row was never short of width.
+		   What it was short of is height, so the margins below give some back. */
 		#header nav a {
-			font-size: 1.35em;
+			font-size: 1.85em;
 		}
 
 		#header nav a .title {
-			font-size: 0.62rem !important;
+			font-size: 0.68rem !important;
 			letter-spacing: 0.08em;
+		}
+
+		#header nav {
+			margin: 1.5em 0 0 0;
 		}
 
 		#header .typed {
 			letter-spacing: 0.04em;
+			margin: 1.3em 0 0.3em 0;
 		}
 
 		#footer {
-			padding: 3em 1em 1.2em 1em;
+			padding: 2em 1em 1.1em 1em;
+		}
+
+	}
+
+/* Short screens — three taller rows do not fit under 640px of height, and the
+   header would run into the footer rather than scroll, since body is hidden */
+
+	@media screen and (max-width: 736px) and (max-height: 640px) {
+
+		#header .title_content h1 {
+			font-size: clamp(4.5rem, 24vw, 8.5rem) !important;
+		}
+
+		#header .title_content span {
+			font-size: clamp(1.2rem, 6.2vw, 2rem);
+		}
+
+		#header nav li {
+			height: 5.6em;
+		}
+
+		#header nav a {
+			font-size: 1.45em;
+		}
+
+		#header nav a .title {
+			font-size: 0.6rem !important;
 		}
 
 	}
