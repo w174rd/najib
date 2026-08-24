@@ -873,12 +873,16 @@
 			width: 96%;
 		}
 
+		/* These were cut back to stop the wordmark running off the right edge,
+		   but that overflow was a measuring error — headless Chrome floors the
+		   viewport at 500px, so the "390px" shots were 500px pages cropped, not
+		   scaled. Measured properly the block was using 46% of the header. */
 		#header .title_content h1 {
-			font-size: clamp(3.2rem, 17vw, 8.5rem) !important;
+			font-size: clamp(6rem, 31vw, 8.5rem) !important;
 		}
 
 		#header .title_content span {
-			font-size: clamp(0.95rem, 4.4vw, 2rem);
+			font-size: clamp(1.5rem, 8vw, 2rem);
 		}
 
 		/* three per row on phones — seven then reads as 3 + 3 + 1. The narrower
