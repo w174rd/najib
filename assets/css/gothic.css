@@ -19,6 +19,13 @@
 		/* the string value leads the line by brightness, not by hue */
 		--parchment: #e8e1d5;
 
+		/* Hard black-and-white static, shared by the sigil and the wards.
+		   feTurbulence alone is mid-grey mush with random alpha, so it is
+		   desaturated, pushed through a steep transfer to force the pixels to
+		   the extremes, and has its alpha flattened to 1 — otherwise the tile
+		   fades out from under itself and `screen` blending eats what is left. */
+		--noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='wn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='3.5' intercept='-0.9'/%3E%3CfeFuncG type='linear' slope='3.5' intercept='-0.9'/%3E%3CfeFuncB type='linear' slope='3.5' intercept='-0.9'/%3E%3CfeFuncA type='linear' slope='0' intercept='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23wn)'/%3E%3C/svg%3E");
+
 		--mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 		--gothic: 'UnifrakturMaguntia', 'Lombardina Initial Two', serif;
 		--drop-cap: 'Lombardina Initial One', 'Lombardina Initial Two', 'UnifrakturMaguntia', serif;
@@ -179,6 +186,62 @@
 			text-shadow: 0 0 0.6em rgba(207, 199, 186, 0.16);
 		}
 
+		/* the sigil's own :before/:after are the chromatic ghosts, so the static
+		   needs a third layer — an empty child inside the h1 */
+		#header .title_content h1 .noise {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			pointer-events: none;
+		}
+
+		/* A plain noise rectangle reads as a grey card, and mix-blend-mode cannot
+		   fix it: the h1 animates opacity, so it isolates its own blend group and
+		   the backdrop inside it is transparent, not the black page. So the static
+		   is painted into a third copy of the letter and clipped to the glyph with
+		   background-clip: text — the noise can then only land on the ink. */
+		#header .title_content h1 .noise:before {
+			content: attr(data-text);
+			position: absolute;
+			top: 0;
+			left: 0;
+			font-family: var(--drop-cap);
+			font-style: normal;
+			font-weight: normal;
+			letter-spacing: 0;
+			white-space: pre;
+			background-image: var(--noise);
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+			-webkit-text-fill-color: transparent;
+			text-shadow: none;
+			opacity: 0;
+			-webkit-animation: sigil-noise 6.5s steps(1, end) infinite;
+			animation: sigil-noise 6.5s steps(1, end) infinite;
+		}
+
+		/* banded, not a solid fill, and timed to the 74–100% window where
+		   slice-a / slice-b fire so the static lands with the tearing */
+		@keyframes sigil-noise {
+			0%, 73%, 100% { opacity: 0; clip-path: inset(100% 0 0 0); }
+			74% { opacity: 0.6;  clip-path: inset(12% 0 62% 0); background-position: 0 0; }
+			76% { opacity: 0.35; clip-path: inset(58% 0 20% 0); background-position: -37px 21px; }
+			78% { opacity: 0;    clip-path: inset(100% 0 0 0); }
+			80% { opacity: 0.55; clip-path: inset(30% 0 44% 0); background-position: 43px -19px; }
+			82% { opacity: 0.3;  clip-path: inset(6% 0 76% 0);  background-position: 25px 37px; }
+			84% { opacity: 0;    clip-path: inset(100% 0 0 0); }
+			86% { opacity: 0.5;  clip-path: inset(66% 0 12% 0); background-position: -51px -12px; }
+			88% { opacity: 0.28; clip-path: inset(20% 0 54% 0); background-position: 17px 45px; }
+			90% { opacity: 0;    clip-path: inset(100% 0 0 0); }
+			93% { opacity: 0.45; clip-path: inset(44% 0 34% 0); background-position: -29px 11px; }
+			95% { opacity: 0.25; clip-path: inset(10% 0 68% 0); background-position: 39px -41px; }
+			97% { opacity: 0;    clip-path: inset(100% 0 0 0); }
+			99% { opacity: 0.35; clip-path: inset(72% 0 8% 0);  background-position: -13px 27px; }
+		}
+
 	@keyframes candle {
 		0%, 100% { opacity: 1; }
 		41% { opacity: 0.95; }
@@ -279,9 +342,90 @@
 				-webkit-transform: translateY(-2px);
 				transform: translateY(-2px);
 				outline: none;
+				-webkit-animation: ward-tear 0.4s steps(1, end) 1;
+				animation: ward-tear 0.4s steps(1, end) 1;
+			}
+
+			/* harder hit on press — later rule, so it wins over :hover */
+			#header nav a:active {
+				-webkit-animation: ward-hit 0.28s steps(1, end) 1;
+				animation: ward-hit 0.28s steps(1, end) 1;
+			}
+
+			/* drop-shadow splits the whole subtree, so the two <img> marks tear
+			   along with the icon-font glyphs — one effect covers all seven.
+			   No transform here on purpose: the ward holds still and only the
+			   colour separates, so the hover rule's own lift stays undisturbed. */
+			/* offsets stay under the 22px gutter so a torn ward never bleeds
+			   into its neighbour */
+			@keyframes ward-tear {
+				0%   { filter: drop-shadow(6px 0 var(--ember)) drop-shadow(-6px 0 var(--ghost)); }
+				15%  { filter: drop-shadow(-9px 1px var(--ember)) drop-shadow(9px -1px var(--ghost)); }
+				30%  { filter: none; }
+				45%  { filter: drop-shadow(8px -1px var(--ghost)) drop-shadow(-8px 1px var(--ember)); }
+				60%  { filter: drop-shadow(-4px 0 var(--ember)) drop-shadow(4px 0 var(--ghost)); }
+				75%  { filter: drop-shadow(2px 0 var(--ghost)); }
+				100% { filter: none; }
+			}
+
+			@keyframes ward-hit {
+				0%   { filter: drop-shadow(12px 0 var(--ember)) drop-shadow(-12px 0 var(--ghost)); }
+				20%  { filter: drop-shadow(-15px 2px var(--ember)) drop-shadow(15px -2px var(--ghost)); }
+				40%  { filter: none; }
+				60%  { filter: drop-shadow(11px -2px var(--ghost)) drop-shadow(-11px 2px var(--ember)); }
+				80%  { filter: drop-shadow(-6px 0 var(--ember)) drop-shadow(6px 0 var(--ghost)); }
+				100% { filter: none; }
+			}
+
+			/* static burst inside the ring — FontAwesome owns :before, :after is free */
+			#header nav a:after {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				border-radius: 100%;
+				opacity: 0;
+				pointer-events: none;
+				mix-blend-mode: screen;
+				background-image: var(--noise);
+			}
+
+			#header nav a:hover:after,
+			#header nav a:focus-visible:after {
+				-webkit-animation: ward-noise 0.4s steps(1, end) 1;
+				animation: ward-noise 0.4s steps(1, end) 1;
+			}
+
+			#header nav a:active:after {
+				-webkit-animation: ward-noise-hard 0.28s steps(1, end) 1;
+				animation: ward-noise-hard 0.28s steps(1, end) 1;
+			}
+
+			/* the tile is only shifted, never scaled — resampling would blur it
+			   and static has to stay pixel-hard to read as interference */
+			@keyframes ward-noise {
+				0%   { opacity: 0.85; background-position: 0 0; }
+				15%  { opacity: 0.5;  background-position: -37px 21px; }
+				30%  { opacity: 0.12; background-position: 43px 9px; }
+				45%  { opacity: 0.78; background-position: 19px -43px; }
+				60%  { opacity: 0.4;  background-position: -51px -12px; }
+				75%  { opacity: 0.15; background-position: -23px 47px; }
+				100% { opacity: 0; }
+			}
+
+			@keyframes ward-noise-hard {
+				0%   { opacity: 1;    background-position: 11px -29px; }
+				20%  { opacity: 0.7;  background-position: -44px 33px; }
+				40%  { opacity: 0.28; background-position: 39px 41px; }
+				60%  { opacity: 0.92; background-position: 27px 17px; }
+				80%  { opacity: 0.5;  background-position: -18px -55px; }
+				100% { opacity: 0; }
 			}
 
 			#header nav a .title {
+				position: relative;
 				font-family: var(--mono);
 				font-size: 0.68rem !important;
 				letter-spacing: 0.14em;
@@ -290,6 +434,53 @@
 				-moz-transition: color 0.35s ease-in-out;
 				-webkit-transition: color 0.35s ease-in-out;
 				transition: color 0.35s ease-in-out;
+			}
+
+			/* label ghosts — invisible until a burst drives their own opacity */
+			#header nav a .title:before,
+			#header nav a .title:after {
+				content: attr(data-text);
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				opacity: 0;
+				pointer-events: none;
+				mix-blend-mode: screen;
+			}
+
+			#header nav a:hover .title:before,
+			#header nav a:focus-visible .title:before,
+			#header nav a:active .title:before {
+				color: var(--ember);
+				-webkit-animation: label-tear-a 0.4s steps(1, end) 1;
+				animation: label-tear-a 0.4s steps(1, end) 1;
+			}
+
+			#header nav a:hover .title:after,
+			#header nav a:focus-visible .title:after,
+			#header nav a:active .title:after {
+				color: var(--ghost);
+				-webkit-animation: label-tear-b 0.4s steps(1, end) 1;
+				animation: label-tear-b 0.4s steps(1, end) 1;
+			}
+
+			/* ghosts only — the real label never moves. Capped at 5px so a slice
+			   stays inside the li rather than running under the next label. */
+			@keyframes label-tear-a {
+				0%   { opacity: 1; transform: translateX(-5px); clip-path: inset(14% 0 52% 0); }
+				25%  { opacity: 1; transform: translateX(4px);  clip-path: inset(58% 0 10% 0); }
+				50%  { opacity: 1; transform: translateX(-5px); clip-path: inset(4% 0 66% 0); }
+				75%  { opacity: 1; transform: translateX(3px);  clip-path: inset(40% 0 26% 0); }
+				100% { opacity: 0; transform: translateX(0);    clip-path: inset(0 0 100% 0); }
+			}
+
+			@keyframes label-tear-b {
+				0%   { opacity: 1; transform: translateX(5px);  clip-path: inset(50% 0 18% 0); }
+				25%  { opacity: 1; transform: translateX(-5px); clip-path: inset(8% 0 62% 0); }
+				50%  { opacity: 1; transform: translateX(4px);  clip-path: inset(66% 0 4% 0); }
+				75%  { opacity: 1; transform: translateX(-3px); clip-path: inset(26% 0 42% 0); }
+				100% { opacity: 0; transform: translateX(0);    clip-path: inset(0 0 100% 0); }
 			}
 
 			#header nav a:hover .title,
@@ -609,10 +800,17 @@
 	@media (prefers-reduced-motion: reduce) {
 
 		.glitch:before,
-		.glitch:after {
+		.glitch:after,
+		#header .title_content h1 .noise,
+		#header nav a:after,
+		#header nav a .title:before,
+		#header nav a .title:after {
 			display: none;
 		}
 
+		#header nav a:hover,
+		#header nav a:focus-visible,
+		#header nav a:active,
 		#header .title_content h1,
 		#header .typed .typed-cursor {
 			-webkit-animation: none !important;
