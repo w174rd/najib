@@ -590,6 +590,7 @@
 		z-index: 20;
 	}
 
+		/* no frame — the 38px box is kept only as a hit area */
 		.view-modal,
 		.view-modal-qrcode {
 			display: inline-flex;
@@ -601,13 +602,13 @@
 			margin-left: 0;
 			font-size: 21px;
 			color: var(--ash);
-			border: 1px solid rgba(207, 199, 186, 0.16);
+			border: 0;
 			border-radius: 0;
-			background-color: rgba(207, 199, 186, 0.015);
-			box-shadow: inset 0 0 1.2em rgba(0, 0, 0, 0.65);
-			-moz-transition: all 0.35s ease-in-out;
-			-webkit-transition: all 0.35s ease-in-out;
-			transition: all 0.35s ease-in-out;
+			background-color: transparent;
+			box-shadow: none;
+			-moz-transition: color 0.35s ease-in-out, text-shadow 0.35s ease-in-out;
+			-webkit-transition: color 0.35s ease-in-out, text-shadow 0.35s ease-in-out;
+			transition: color 0.35s ease-in-out, text-shadow 0.35s ease-in-out;
 		}
 
 			.view-modal:hover,
@@ -615,12 +616,87 @@
 			.view-modal:focus-visible,
 			.view-modal-qrcode:focus-visible {
 				color: var(--ink);
-				border-color: var(--blood);
-				background-color: rgba(143, 22, 22, 0.16);
-				box-shadow:
-					0 0 1.2em rgba(143, 22, 22, 0.4),
-					inset 0 0 1em rgba(143, 22, 22, 0.28);
+				text-shadow: 0 0 0.7em rgba(143, 22, 22, 0.6);
 				outline: none;
+			}
+
+			.view-modal:hover,
+			.view-modal-qrcode:hover,
+			.view-modal:focus-visible,
+			.view-modal-qrcode:focus-visible,
+			.view-modal.is-glitching:not(:hover),
+			.view-modal-qrcode.is-glitching:not(:hover) {
+				-webkit-animation: tool-tear 0.4s steps(1, end) 1;
+				animation: tool-tear 0.4s steps(1, end) 1;
+			}
+
+			.view-modal:active,
+			.view-modal-qrcode:active {
+				-webkit-animation: tool-hit 0.28s steps(1, end) 1;
+				animation: tool-hit 0.28s steps(1, end) 1;
+			}
+
+			/* One red ghost, never a red-and-cyan pair. Opposing warm and cool
+			   fringes on a dark ground is the TikTok mark, and it stays the
+			   TikTok mark however small the offset gets — the cool half has to
+			   go, not shrink. A single displaced channel still reads as a signal
+			   fault, and red-on-black is the palette the rest of the page is in.
+			   Offsets are the tools' own: the wards' 6-9px is scaled to a 69px
+			   circle and would swamp a 21px glyph. */
+			@keyframes tool-tear {
+				0%   { filter: drop-shadow(-2px 0 var(--ember)); }
+				20%  { filter: drop-shadow(3px 1px var(--ember)); }
+				32%  { filter: none; }
+				46%  { filter: drop-shadow(-2px -1px var(--ember)); }
+				64%  { filter: drop-shadow(1px 0 var(--ember)); }
+				80%, 100% { filter: none; }
+			}
+
+			@keyframes tool-hit {
+				0%   { filter: drop-shadow(-4px 0 var(--ember)); }
+				22%  { filter: drop-shadow(4px 2px var(--ember)); }
+				40%  { filter: none; }
+				60%  { filter: drop-shadow(-3px -2px var(--ember)); }
+				80%  { filter: drop-shadow(2px 0 var(--ember)); }
+				100% { filter: none; }
+			}
+
+			/* With the frame gone there is nothing to hold a square of static, so
+			   the noise goes into the glyph itself. Painting it as the background
+			   of unicons' own :before and clipping to text needs no codepoint —
+			   which matters, because the icon font is served from a CDN and its
+			   private-use values are not ours to hardcode. */
+			.view-modal:hover i:before,
+			.view-modal-qrcode:hover i:before,
+			.view-modal:focus-visible i:before,
+			.view-modal-qrcode:focus-visible i:before,
+			.view-modal:active i:before,
+			.view-modal-qrcode:active i:before,
+			.view-modal.is-glitching:not(:hover) i:before,
+			.view-modal-qrcode.is-glitching:not(:hover) i:before {
+				background-image: var(--noise);
+				-webkit-background-clip: text;
+				background-clip: text;
+				-webkit-animation: tool-noise 0.4s steps(1, end) 1;
+				animation: tool-noise 0.4s steps(1, end) 1;
+			}
+
+			/* The glyph flickers between its own colour and static rather than
+			   being overlaid — there is no second copy of it to overlay with, so
+			   "more noise" has to mean more of the burst spent as static. It sits
+			   in static ~80% of the time now, the clean frames only punctuating
+			   it, and the tile is reseated on every one so the grain keeps moving
+			   instead of freezing into a texture. */
+			@keyframes tool-noise {
+				0%        { -webkit-text-fill-color: transparent; background-position: 0 0; }
+				14%       { -webkit-text-fill-color: transparent; background-position: -37px 21px; }
+				28%       { -webkit-text-fill-color: currentColor; }
+				34%       { -webkit-text-fill-color: transparent; background-position: 43px 9px; }
+				48%       { -webkit-text-fill-color: transparent; background-position: 19px -43px; }
+				60%       { -webkit-text-fill-color: currentColor; }
+				66%       { -webkit-text-fill-color: transparent; background-position: -51px -12px; }
+				80%       { -webkit-text-fill-color: transparent; background-position: 27px 35px; }
+				92%, 100% { -webkit-text-fill-color: currentColor; }
 			}
 
 	.popup,

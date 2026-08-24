@@ -13,10 +13,11 @@
 
 	if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-	var nav = document.querySelector('#header nav');
-	if (!nav) return;
-
-	var wards = nav.querySelectorAll('a');
+	// one pool: the seven nav wards plus the share and QR tools, so a burst
+	// can land anywhere on the page rather than only inside the row
+	var wards = document.querySelectorAll(
+		'#header nav a, .share-button-container .view-modal, .share-button-container .view-modal-qrcode'
+	);
 	if (!wards.length) return;
 
 	var BURST = 420;    // must outlast the 0.4s keyframes
@@ -43,10 +44,19 @@
 		}, BURST);
 	}
 
+	// the pointer wins: hold the ambient pass while anything is under it.
+	// Asked per target rather than of a container, because the two tools sit
+	// outside the nav and a container test would miss them.
+	function inUse() {
+		for (var i = 0; i < wards.length; i++) {
+			if (wards[i].matches(':hover')) return true;
+		}
+		return false;
+	}
+
 	function schedule() {
 		setTimeout(function () {
-			// the pointer wins: never tear a ward while the row is being used
-			if (!document.hidden && !nav.matches(':hover')) burst();
+			if (!document.hidden && !inUse()) burst();
 			schedule();
 		}, MIN_GAP + Math.random() * (MAX_GAP - MIN_GAP));
 	}
