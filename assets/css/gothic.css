@@ -881,7 +881,15 @@
 			font-size: clamp(0.95rem, 4.4vw, 2rem);
 		}
 
+		/* three per row on phones — seven then reads as 3 + 3 + 1. The narrower
+		   cap keeps them clustered instead of drifting apart at the wide end of
+		   this breakpoint, where a third of 700px would be all gutter. */
+		#header nav ul {
+			max-width: 24em;
+		}
+
 		#header nav li {
+			flex: 0 0 33.333%;
 			height: 5.4em;
 		}
 
