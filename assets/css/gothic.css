@@ -1,0 +1,622 @@
+/*
+	najib • info — gothic layer
+	Loaded last, on top of main.css (Aerial) and share_style.css.
+	Palette and glitch language borrowed from ./w174rd.
+*/
+
+/* Tokens */
+
+	:root {
+		--void:   #000000;
+		--pitch:  #0b0b0e;
+		--crypt:  #131317;
+		--ink:    #cfc7ba;
+		--ash:    #7a736a;
+		--dim:    #45403a;
+		--blood:  #8f1616;
+		--ember:  #c2143a;
+		--ghost:  #1f7f96;
+		/* the string value leads the line by brightness, not by hue */
+		--parchment: #e8e1d5;
+
+		--mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+		--gothic: 'UnifrakturMaguntia', 'Lombardina Initial Two', serif;
+		--drop-cap: 'Lombardina Initial One', 'Lombardina Initial Two', 'UnifrakturMaguntia', serif;
+	}
+
+/* Basic */
+
+	html, body {
+		background: var(--void);
+	}
+
+	/* beats share_style.css's blanket `* { font-family: Poppins }`,
+	   loses to every icon font's own class rule — which is the point */
+	body *, input, select, textarea, button {
+		font-family: var(--mono);
+	}
+
+	body, input, select, textarea {
+		background-color: var(--void);
+		color: var(--ink);
+		font-family: var(--mono);
+		letter-spacing: 0.02em;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	::selection {
+		background: var(--blood);
+		color: #fff;
+	}
+
+	::-moz-selection {
+		background: var(--blood);
+		color: #fff;
+	}
+
+/* Wrapper */
+
+	#wrapper {
+		-moz-animation: wrapper 4s forwards;
+		-webkit-animation: wrapper 4s forwards;
+		animation: wrapper 4s forwards;
+	}
+
+/* BG — flat void, no gradient, no fog */
+
+	#bg {
+		width: 100%;
+		height: 100%;
+		background: var(--void);
+	}
+
+/* Glitch — the sigil, never quite holding still */
+
+	.glitch {
+		position: relative;
+		display: inline-block;
+	}
+
+		.glitch:before,
+		.glitch:after {
+			content: attr(data-text);
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			pointer-events: none;
+			text-shadow: none;
+			mix-blend-mode: screen;
+		}
+
+		.glitch:before {
+			color: var(--ember);
+			-webkit-transform: translateX(-0.035em);
+			transform: translateX(-0.035em);
+			-webkit-animation: slice-a 6.5s steps(1, end) infinite;
+			animation: slice-a 6.5s steps(1, end) infinite;
+		}
+
+		.glitch:after {
+			color: var(--ghost);
+			-webkit-transform: translateX(0.035em);
+			transform: translateX(0.035em);
+			-webkit-animation: slice-b 6.5s steps(1, end) infinite;
+			animation: slice-b 6.5s steps(1, end) infinite;
+		}
+
+	@keyframes slice-a {
+		0%, 74%, 100% { clip-path: inset(100% 0 0 0); }
+		75% { clip-path: inset(10% 0 66% 0); }
+		77% { clip-path: inset(64% 0 18% 0); }
+		79% { clip-path: inset(100% 0 0 0); }
+		81% { clip-path: inset(34% 0 48% 0); }
+		83% { clip-path: inset(4% 0 82% 0); }
+		85% { clip-path: inset(72% 0 12% 0); }
+		87% { clip-path: inset(100% 0 0 0); }
+		89% { clip-path: inset(22% 0 60% 0); }
+		91% { clip-path: inset(52% 0 30% 0); }
+		93% { clip-path: inset(12% 0 74% 0); }
+		95% { clip-path: inset(100% 0 0 0); }
+		97% { clip-path: inset(60% 0 24% 0); }
+		99% { clip-path: inset(30% 0 52% 0); }
+	}
+
+	@keyframes slice-b {
+		0%, 74%, 100% { clip-path: inset(0 0 100% 0); }
+		76% { clip-path: inset(56% 0 28% 0); }
+		78% { clip-path: inset(18% 0 70% 0); }
+		80% { clip-path: inset(74% 0 10% 0); }
+		82% { clip-path: inset(0 0 100% 0); }
+		84% { clip-path: inset(42% 0 42% 0); }
+		86% { clip-path: inset(8% 0 76% 0); }
+		88% { clip-path: inset(66% 0 20% 0); }
+		90% { clip-path: inset(0 0 100% 0); }
+		92% { clip-path: inset(36% 0 50% 0); }
+		94% { clip-path: inset(78% 0 8% 0); }
+		96% { clip-path: inset(16% 0 68% 0); }
+		98% { clip-path: inset(48% 0 36% 0); }
+		99% { clip-path: inset(0 0 100% 0); }
+	}
+
+/* Header — the sigil */
+
+	#header {
+		top: -1.5em;
+	}
+
+	.title_content {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.1em;
+	}
+
+		#header .title_content h1 {
+			position: relative;
+			font-family: var(--drop-cap) !important;
+			font-size: clamp(4.5rem, 19vw, 8.5rem) !important;
+			font-weight: normal;
+			line-height: 0.9;
+			letter-spacing: 0;
+			color: var(--blood);
+			text-shadow:
+				0 0 0.08em rgba(143, 22, 22, 0.55),
+				0 0 0.4em rgba(143, 22, 22, 0.32),
+				0 0 1.1em rgba(143, 22, 22, 0.16);
+			-webkit-animation: candle 7s ease-in-out infinite;
+			animation: candle 7s ease-in-out infinite;
+		}
+
+		#header .title_content span {
+			font-family: var(--gothic);
+			font-size: clamp(1.1rem, 5vw, 2rem);
+			line-height: 0.95;
+			margin-left: 0.15em;
+			text-align: left;
+			color: var(--ink);
+			opacity: 0.9;
+			text-shadow: 0 0 0.6em rgba(207, 199, 186, 0.16);
+		}
+
+	@keyframes candle {
+		0%, 100% { opacity: 1; }
+		41% { opacity: 0.95; }
+		43% { opacity: 0.68; }
+		46% { opacity: 0.97; }
+		61% { opacity: 0.83; }
+		64% { opacity: 1; }
+	}
+
+/* Header — the incantation */
+
+	#header .typed {
+		display: block;
+		font-family: var(--mono);
+		font-size: clamp(0.85rem, 3.4vw, 1.25rem);
+		/* no editor or terminal tracks its type out — this is the single thing
+		   that made the line read as decoration instead of as code */
+		letter-spacing: 0.05em;
+		line-height: 1.6;
+		margin: 1.8em 0 0.4em 0;
+		color: var(--ash);
+		opacity: 1;
+	}
+
+		/* syntax tokens: punctuation recedes, the value is what you read */
+		#header .typed .brace {
+			color: var(--blood);
+			font-size: 2em;
+			line-height: 0;
+			vertical-align: -0.15em;
+			margin: 0 0.05em;
+			text-shadow: 0 0 0.6em rgba(143, 22, 22, 0.45);
+		}
+
+		#header .typed .quote {
+			color: var(--dim);
+		}
+
+		#header .typed #typed-text {
+			color: var(--parchment);
+			text-shadow: 0 0 0.7em rgba(232, 225, 213, 0.2);
+		}
+
+		#header .typed .typed-cursor {
+			display: inline-block;
+			width: 0.55ch;
+			height: 1em;
+			margin-left: 0.15ch;
+			vertical-align: -0.12em;
+			color: transparent;
+			background: var(--ember);
+			box-shadow: 0 0 0.7em rgba(194, 20, 58, 0.55);
+		}
+
+/* Header — the wards */
+
+	#header nav {
+		margin: 2.2em 0 0 0;
+	}
+
+		/* flex instead of inline-block so the row never spills past #header */
+		#header nav ul {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: flex-start;
+			justify-content: center;
+		}
+
+		/* labels are wider than the 2.5em circle and overflow it, so the
+		   gutter has to clear the widest one ("GOOGLE PLAY"), not the circle */
+		#header nav li {
+			height: 6em;
+			margin-left: 22px;
+			margin-right: 22px;
+		}
+
+		#header nav a {
+			-moz-transition: all 0.35s ease-in-out;
+			-webkit-transition: all 0.35s ease-in-out;
+			transition: all 0.35s ease-in-out;
+			border: solid 1px rgba(207, 199, 186, 0.16);
+			background-color: rgba(207, 199, 186, 0.015);
+			box-shadow: inset 0 0 1.6em rgba(0, 0, 0, 0.65);
+			color: var(--ash);
+			font-size: 1.6em;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+			#header nav a:hover,
+			#header nav a:focus-visible {
+				background-color: rgba(143, 22, 22, 0.14);
+				border-color: var(--blood);
+				color: var(--ink);
+				box-shadow:
+					0 0 1.5em rgba(143, 22, 22, 0.4),
+					inset 0 0 1.2em rgba(143, 22, 22, 0.28);
+				-webkit-transform: translateY(-2px);
+				transform: translateY(-2px);
+				outline: none;
+			}
+
+			#header nav a .title {
+				font-family: var(--mono);
+				font-size: 0.68rem !important;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				color: var(--ash);
+				-moz-transition: color 0.35s ease-in-out;
+				-webkit-transition: color 0.35s ease-in-out;
+				transition: color 0.35s ease-in-out;
+			}
+
+			#header nav a:hover .title,
+			#header nav a:focus-visible .title {
+				color: var(--ink);
+			}
+
+			/* the two <img> marks can't inherit currentColor — dim them instead */
+			.fa-wattpad,
+			.fa-w174rd {
+				opacity: 0.5;
+				-moz-transition: all 0.35s ease-in-out;
+				-webkit-transition: all 0.35s ease-in-out;
+				transition: all 0.35s ease-in-out;
+			}
+
+			#header nav a:hover .fa-wattpad,
+			#header nav a:hover .fa-w174rd,
+			#header nav a:focus-visible .fa-wattpad,
+			#header nav a:focus-visible .fa-w174rd {
+				opacity: 1;
+				-webkit-filter: drop-shadow(0 0 0.35em rgba(194, 20, 58, 0.65));
+				filter: drop-shadow(0 0 0.35em rgba(194, 20, 58, 0.65));
+			}
+
+/* Footer */
+
+	#footer {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 0.9em;
+		height: auto;
+		line-height: 1.6;
+		padding: 4em 1em 1.5em 1em;
+		background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+	}
+
+		#footer .copyright {
+			font-family: var(--mono);
+			font-size: 0.72rem;
+			letter-spacing: 0.24em;
+			text-transform: uppercase;
+			color: var(--dim);
+		}
+
+			#footer .copyright a {
+				border-bottom: 0;
+				color: var(--ash);
+				-moz-transition: all 0.4s ease-in-out;
+				-webkit-transition: all 0.4s ease-in-out;
+				transition: all 0.4s ease-in-out;
+			}
+
+				#footer .copyright a:hover {
+					color: var(--ember);
+					text-shadow: 0 0 0.8em rgba(194, 20, 58, 0.5);
+				}
+
+			.copyright .icon-footer {
+				font-family: var(--gothic);
+				font-size: 1.75em;
+				line-height: 0;
+				color: var(--blood);
+				vertical-align: -0.22em;
+				margin-right: 0.1em;
+			}
+
+/* Share + QR — dragged out of the light */
+
+	.share-button-container {
+		position: relative;
+		z-index: 20;
+	}
+
+		.view-modal,
+		.view-modal-qrcode {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 38px;
+			height: 38px;
+			padding: 0;
+			margin-left: 0;
+			font-size: 21px;
+			color: var(--ash);
+			border: 1px solid rgba(207, 199, 186, 0.16);
+			border-radius: 0;
+			background-color: rgba(207, 199, 186, 0.015);
+			box-shadow: inset 0 0 1.2em rgba(0, 0, 0, 0.65);
+			-moz-transition: all 0.35s ease-in-out;
+			-webkit-transition: all 0.35s ease-in-out;
+			transition: all 0.35s ease-in-out;
+		}
+
+			.view-modal:hover,
+			.view-modal-qrcode:hover,
+			.view-modal:focus-visible,
+			.view-modal-qrcode:focus-visible {
+				color: var(--ink);
+				border-color: var(--blood);
+				background-color: rgba(143, 22, 22, 0.16);
+				box-shadow:
+					0 0 1.2em rgba(143, 22, 22, 0.4),
+					inset 0 0 1em rgba(143, 22, 22, 0.28);
+				outline: none;
+			}
+
+	.popup,
+	.popup-qrcode {
+		z-index: 30;
+		background: var(--pitch);
+		color: var(--ink);
+		border: 1px solid rgba(143, 22, 22, 0.3);
+		border-radius: 2px;
+		box-shadow:
+			0 0 0 1px rgba(0, 0, 0, 0.6),
+			0 24px 60px rgba(0, 0, 0, 0.85),
+			0 0 90px rgba(143, 22, 22, 0.1);
+	}
+
+		.popup header,
+		.popup-qrcode header {
+			border-bottom: 1px solid rgba(207, 199, 186, 0.1);
+		}
+
+		.popup header span,
+		.popup-qrcode header span {
+			font-family: var(--gothic);
+			font-size: 1.5rem;
+			font-weight: normal;
+			letter-spacing: 0.02em;
+			color: var(--ink);
+		}
+
+		.popup header .close,
+		.popup-qrcode header .close {
+			background: transparent;
+			border: 1px solid rgba(207, 199, 186, 0.14);
+			border-radius: 0;
+			color: var(--dim);
+		}
+
+			.popup header .close:hover,
+			.popup-qrcode header .close:hover {
+				background: rgba(143, 22, 22, 0.16);
+				border-color: var(--blood);
+				color: var(--ink);
+			}
+
+		.content_share p,
+		.content-qrcode p {
+			font-family: var(--mono);
+			font-size: 0.62rem;
+			font-weight: normal;
+			letter-spacing: 0.26em;
+			text-transform: uppercase;
+			color: var(--ash);
+		}
+
+		/* seven 50px tiles never fit a 380px modal — shrink and wrap them */
+		.popup .icons {
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 5px;
+			overflow: visible;
+		}
+
+		/* one voice, not seven brand colours */
+		.popup .icons a,
+		.popup .icons a:nth-child(1),
+		.popup .icons a:nth-child(2),
+		.popup .icons a:nth-child(3),
+		.popup .icons a:nth-child(4),
+		.popup .icons a:nth-child(5),
+		.popup .icons a:nth-child(6),
+		.popup .icons a:nth-child(7) {
+			color: var(--ash);
+			border-radius: 0;
+			border: 1px solid rgba(207, 199, 186, 0.14);
+			background: transparent;
+			margin-right: 0;
+		}
+
+			.popup .icons a i {
+				width: 38px;
+				height: 38px;
+				padding: 10px;
+				font-size: 17px;
+			}
+
+			.popup .icons a:hover,
+			.popup .icons a:nth-child(1):hover,
+			.popup .icons a:nth-child(2):hover,
+			.popup .icons a:nth-child(3):hover,
+			.popup .icons a:nth-child(4):hover,
+			.popup .icons a:nth-child(5):hover,
+			.popup .icons a:nth-child(6):hover,
+			.popup .icons a:nth-child(7):hover {
+				color: var(--ink);
+				border-color: var(--blood);
+				background: rgba(143, 22, 22, 0.16);
+			}
+
+		.content_share .field {
+			border: 1px solid rgba(207, 199, 186, 0.14);
+			border-radius: 0;
+			background: rgba(0, 0, 0, 0.35);
+		}
+
+			.field.active {
+				border-color: var(--blood);
+			}
+
+			.field i {
+				color: var(--dim);
+			}
+
+			.field.active i {
+				color: var(--ember);
+			}
+
+			.field input {
+				font-family: var(--mono);
+				font-size: 0.8rem;
+				letter-spacing: 0.04em;
+				color: var(--ink);
+				background-color: transparent;
+			}
+
+			.field button {
+				font-family: var(--mono);
+				font-size: 0.62rem;
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				border-radius: 0;
+				color: var(--ink);
+				background: var(--blood);
+				-moz-transition: all 0.3s ease-in-out;
+				-webkit-transition: all 0.3s ease-in-out;
+				transition: all 0.3s ease-in-out;
+			}
+
+			.field button:hover {
+				background: var(--ember);
+				box-shadow: 0 0 1em rgba(194, 20, 58, 0.45);
+			}
+
+		.content-qrcode img {
+			padding: 10px;
+			background: var(--ink);
+			border: 1px solid rgba(143, 22, 22, 0.3);
+		}
+
+/* Tablet — seven wards stop fitting one row well before the phone breakpoint,
+   so drop to a 4 + 3 grid early; the max-width keeps it from spreading thin */
+
+	@media screen and (max-width: 900px) {
+
+		#header nav ul {
+			max-width: 30em;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		#header nav li {
+			flex: 0 0 25%;
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+	}
+
+/* Mobile */
+
+	@media screen and (max-width: 736px) {
+
+		#header {
+			top: -1em;
+			width: 96%;
+		}
+
+		#header .title_content h1 {
+			font-size: clamp(3.2rem, 17vw, 8.5rem) !important;
+		}
+
+		#header .title_content span {
+			font-size: clamp(0.95rem, 4.4vw, 2rem);
+		}
+
+		#header nav li {
+			height: 5.4em;
+		}
+
+		#header nav a {
+			font-size: 1.35em;
+		}
+
+		#header nav a .title {
+			font-size: 0.62rem !important;
+			letter-spacing: 0.08em;
+		}
+
+		#header .typed {
+			letter-spacing: 0.04em;
+		}
+
+		#footer {
+			padding: 3em 1em 1.2em 1em;
+		}
+
+	}
+
+/* Reduced motion */
+
+	@media (prefers-reduced-motion: reduce) {
+
+		.glitch:before,
+		.glitch:after {
+			display: none;
+		}
+
+		#header .title_content h1,
+		#header .typed .typed-cursor {
+			-webkit-animation: none !important;
+			animation: none !important;
+		}
+
+	}
