@@ -858,11 +858,18 @@
 				box-shadow: 0 0 1em rgba(194, 20, 58, 0.45);
 			}
 
-		.content-qrcode img {
+		/* The QR ships its own ground at #0b0b0e — the same value as --pitch — so
+		   the mount only has to extend it outwards into a quiet zone. Anything
+		   lighter here rings the code like a frame. No blend mode: multiply would
+		   crush the light modules against a ground this dark. */
+		.content-qrcode {
 			padding: 10px;
-			background: var(--ink);
-			border: 1px solid rgba(143, 22, 22, 0.3);
+			background: var(--pitch);
 		}
+
+			.content-qrcode img {
+				display: block;
+			}
 
 /* Tablet — seven wards stop fitting one row well before the phone breakpoint,
    so drop to a 4 + 3 grid early; the max-width keeps it from spreading thin */
