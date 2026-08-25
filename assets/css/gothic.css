@@ -16,6 +16,8 @@
 		--blood:  #8f1616;
 		--ember:  #c2143a;
 		--ghost:  #1f7f96;
+		/* the cursor mint, borrowed from ./w174rd's caret */
+		--glow:   #7de3c3;
 		/* the string value leads the line by brightness, not by hue */
 		--parchment: #e8e1d5;
 
@@ -354,8 +356,8 @@
 			height: 1em;
 			margin-left: 0.15ch;
 			vertical-align: -0.12em;
-			background: var(--ember);
-			box-shadow: 0 0 0.7em rgba(194, 20, 58, 0.55);
+			background: var(--glow);
+			box-shadow: 0 0 0.7em rgba(125, 227, 195, 0.55);
 			-webkit-animation: term-blink 1.06s steps(1, end) infinite;
 			animation: term-blink 1.06s steps(1, end) infinite;
 		}
