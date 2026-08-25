@@ -699,6 +699,25 @@
 				92%, 100% { -webkit-text-fill-color: currentColor; }
 			}
 
+	/* Only the page behind is blurred — the panels sit above this layer and
+	   keep their own opaque --pitch ground */
+	.modal-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 25;
+		background: rgba(0, 0, 0, 0.55);
+		-webkit-backdrop-filter: blur(3px) saturate(0.85);
+		backdrop-filter: blur(3px) saturate(0.85);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.2s ease-in-out;
+	}
+
+		.modal-backdrop.show {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
 	.popup,
 	.popup-qrcode {
 		z-index: 30;
