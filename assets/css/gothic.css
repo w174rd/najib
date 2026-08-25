@@ -266,34 +266,103 @@
 		opacity: 1;
 	}
 
-		/* syntax tokens: punctuation recedes, the value is what you read */
+		/* the braced group is centred; #typed-text gets a per-label slot in JS
+		   so the group holds still while a label types and only re-centres
+		   between labels, the closing brace landing hugging each one. */
+		#header .typed {
+			text-align: center;
+		}
+
+		/* the gothic braces, borrowed from the very first typed line */
 		#header .typed .brace {
 			color: var(--blood);
 			font-size: 2.6em;
 			line-height: 0;
-			vertical-align: -0.18em;
-			margin: 0 0.05em;
+			vertical-align: middle;
+			margin: 0 0.12em;
 			text-shadow: 0 0 0.6em rgba(143, 22, 22, 0.45);
+			-webkit-user-select: none;
+			user-select: none;
 		}
 
+		/* shrink-to-fit box holding prompt + label, so the brace after it hugs */
+		#header .typed .cmdbox {
+			display: inline-block;
+			vertical-align: middle;
+			white-space: nowrap;
+		}
+
+		/* najib@server1 prompt: the two names carry light, the separators recede
+		   to --dim so it reads as najib then server1, and the $ keeps the blood. */
+		#header .typed .prompt {
+			-webkit-user-select: none;
+			user-select: none;
+		}
+
+			#header .typed .user {
+				color: #3e0712;
+				text-shadow: 0 0 0.6em rgba(62, 7, 18, 0.4);
+			}
+
+			#header .typed .host {
+				color: #10333e;
+				text-shadow: 0 0 0.6em rgba(16, 51, 62, 0.4);
+			}
+
+			/* the @, the path and the $/# sigil all recede to --dim */
+			#header .typed .at,
+			#header .typed .path,
+			#header .typed .sh {
+				color: var(--dim);
+			}
+
+		/* quotes wrap the label in a dark tone, the way the first typed line
+		   had them — punctuation that frames the value without competing. */
 		#header .typed .quote {
 			color: var(--dim);
 		}
 
+		/* The fixed box is .valbox, not the label: it wraps the quotes and the
+		   label and gets a per-label width in JS, holding the prompt and brace
+		   still. Its width only changes between labels, so easing it glides the
+		   brace to the next length and re-centres the group instead of snapping. */
+		#header .typed .valbox {
+			display: inline-block;
+			text-align: left;
+			white-space: nowrap;
+			transition: width 0.32s cubic-bezier(0.33, 1, 0.68, 1);
+		}
+
+		/* the label is the bright thing; inline, so the closing quote right
+		   after it follows the caret across the box as it types. */
 		#header .typed #typed-text {
 			color: var(--parchment);
 			text-shadow: 0 0 0.7em rgba(232, 225, 213, 0.2);
 		}
 
+		/* typed.js parks its cursor at the slot's right edge; hide it and draw
+		   the caret as ::after so it sits right after the text and snaps like a
+		   terminal cursor rather than fading. */
 		#header .typed .typed-cursor {
+			display: none;
+		}
+
+		#header .typed #typed-text:after {
+			content: '';
 			display: inline-block;
 			width: 0.55ch;
 			height: 1em;
 			margin-left: 0.15ch;
 			vertical-align: -0.12em;
-			color: transparent;
 			background: var(--ember);
 			box-shadow: 0 0 0.7em rgba(194, 20, 58, 0.55);
+			-webkit-animation: term-blink 1.06s steps(1, end) infinite;
+			animation: term-blink 1.06s steps(1, end) infinite;
+		}
+
+		@keyframes term-blink {
+			0%, 50%      { opacity: 1; }
+			50.01%, 100% { opacity: 0; }
 		}
 
 /* Header — the wards */
@@ -1004,9 +1073,13 @@
 		#header nav a:focus-visible,
 		#header nav a:active,
 		#header .title_content h1,
-		#header .typed .typed-cursor {
+		#header .typed #typed-text:after {
 			-webkit-animation: none !important;
 			animation: none !important;
+		}
+
+		#header .typed .valbox {
+			transition: none !important;
 		}
 
 	}

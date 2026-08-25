@@ -27,9 +27,9 @@
 					<header id="header">
 						<div class="title_content">
 							<h1 class="glitch" data-text="N">N<i class="noise" data-text="N" aria-hidden="true"></i></h1>
-							<span>ajib <br> budin abdullah</span>
+							<span>ajib <br> abdullah *</span>
 						</div>
-						<p class="typed"><span class="brace">{</span> <span class="quote">"</span><span id="typed-text"></span><span class="quote">"</span> <span class="brace">}</span></p>
+						<p class="typed"><span class="brace">{</span><span class="cmdbox"><span class="prompt"><span class="user">root</span><span class="at">@</span><span class="host">src</span><span class="path">:~</span><span class="sh">#</span></span> <span class="valbox"><span class="quote">"</span><span id="typed-text"></span><span class="quote">"</span></span></span><span class="brace">}</span></p>
 						<nav>
 							<ul>
 								<li><a href="https://www.linkedin.com/in/najib-budin-abdullah-15192b13a/" target="_blank" class="icon brands fa-linkedin-in"><p class="title" data-text="Linked-in">Linked-in</p></a></li>
@@ -110,11 +110,30 @@
 		</script>
 
 		<script>
+			var labels = ["wizardry", "sigil", "code", "realistic", "universe", "notes", "black hat", "./w174rd"];
+
+			// Size #typed-text to the label about to type, so the closing brace
+			// hugs it and the braced group only re-centres between labels — never
+			// walks while one types. A hidden twin measures at the live font size.
+			var valbox = document.querySelector(".valbox"),
+			    ruler = document.createElement("span"),
+			    curLabel = "";
+			ruler.setAttribute("aria-hidden", "true");
+			ruler.style.cssText = "position:absolute;left:-9999px;top:0;visibility:hidden;white-space:pre";
+			document.querySelector(".typed").appendChild(ruler);
+			// reserve room for the quotes, the label and the caret between the
+			// label and the closing quote, so the box holds the brace still while
+			// the inner text + trailing quote hug the caret as it types.
+			function sizeSlot(txt) { curLabel = txt; ruler.textContent = '"' + txt + ' "'; valbox.style.width = ruler.offsetWidth + "px"; }
+			sizeSlot(labels[0]);
+			window.addEventListener("resize", function () { if (curLabel) sizeSlot(curLabel); });
+
 			var typed = new Typed("#typed-text", {
-				strings: ["wizardry", "sigil", "code", "realistic", "universe", "notes", "black hat", "./w174rd"],
+				strings: labels,
 				typeSpeed: 70,
 				backSpeed: 50,
-				loop: true
+				loop: true,
+				preStringTyped: function (pos) { sizeSlot(labels[pos]); }
 			});
 		</script>
 
