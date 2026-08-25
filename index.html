@@ -110,7 +110,7 @@
 		</script>
 
 		<script>
-			var labels = ["wizardry", "sigil", "code", "realistic", "universe", "notes", "black hat", "./w174rd"];
+			var labels = ["wizardry", "sigil", "code", "realistic", "universe", "notes", "black-hat", "./w174rd"];
 
 			// Size #typed-text to the label about to type, so the closing brace
 			// hugs it and the braced group only re-centres between labels — never
@@ -120,7 +120,7 @@
 			    curLabel = "";
 			ruler.setAttribute("aria-hidden", "true");
 			ruler.style.cssText = "position:absolute;left:-9999px;top:0;visibility:hidden;white-space:pre";
-			document.querySelector(".typed").appendChild(ruler);
+			valbox.appendChild(ruler); // inside .valbox so it measures at the label size
 			// reserve room for the quotes, the label and the caret between the
 			// label and the closing quote, so the box holds the brace still while
 			// the inner text + trailing quote hug the caret as it types.
