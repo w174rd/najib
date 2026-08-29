@@ -188,6 +188,17 @@
 			text-shadow: 0 0 0.6em rgba(207, 199, 186, 0.16);
 		}
 
+		/* UnifrakturMaguntia does cover ~, but draws it as a rounded rectangle
+		   — no wave, 148 of 2048 units tall, flatter than its own hyphen — so at
+		   this size it reads as a dash. Mono keeps the wave and echoes the ~ in
+		   the prompt below; the name either side stays blackletter. */
+		#header .title_content span .tilde {
+			font-family: var(--mono);
+			font-size: 0.78em;
+			vertical-align: 0.12em;
+			letter-spacing: 0;
+		}
+
 		/* the sigil's own :before/:after are the chromatic ghosts, so the static
 		   needs a third layer — an empty child inside the h1 */
 		#header .title_content h1 .noise {
