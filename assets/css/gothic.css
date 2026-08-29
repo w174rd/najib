@@ -319,6 +319,10 @@
 		#header .typed .prompt {
 			-webkit-user-select: none;
 			user-select: none;
+			/* the gap to the quoted label is a margin, not a literal space: a mono
+			   space plus this line's 0.05em tracking ran near 0.65em, and the
+			   opening quote carries side bearing of its own on top of that. */
+			margin-right: 0.25em;
 		}
 
 			#header .typed .user {
