@@ -395,8 +395,11 @@
 
 /* Header — the wards */
 
+	/* The gap to the typed line above is this margin alone: #header is an
+	   inline-block, so the two are block siblings and their margins collapse
+	   — .typed's own 0.4em bottom is absorbed and never adds to it. */
 	#header nav {
-		margin: 2.2em 0 0 0;
+		margin: 3.2em 0 0 0;
 	}
 
 		/* flex instead of inline-block so the row never spills past #header */
@@ -1042,7 +1045,7 @@
 		}
 
 		#header nav {
-			margin: 1.5em 0 0 0;
+			margin: 2.2em 0 0 0;
 		}
 
 		#header .typed {
@@ -1067,6 +1070,12 @@
 
 		#header .title_content span {
 			font-size: clamp(1.2rem, 6.2vw, 2rem);
+		}
+
+		/* the roomier gap above is the first thing to give back here — under
+		   640px of height the rows already only just clear the footer */
+		#header nav {
+			margin: 1.5em 0 0 0;
 		}
 
 		#header nav li {
